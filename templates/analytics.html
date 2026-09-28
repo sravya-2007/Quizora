@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Analytics · Quizora{% endblock %}
+{% block content %}
+<h1>Analytics</h1>
+{% if weakest %}
+<div class="card focus"><h3>Recommended focus</h3><h2>{{ weakest.topic }} <span class="muted">({{ weakest.category }})</span></h2>
+<p>Current average: {{ '%.0f'|format(weakest.avg) }}%</p>
+<p class="muted">Your recent performance suggests this topic could use more practice.</p>
+<a class="btn" href="{{ url_for('topics', subject=weakest.category) }}">Practice topic →</a></div>
+<h2>By subject</h2>
+<div class="card">{% for s in by_subject %}<div class="bar-row"><span>{{ s.category }}</span><div class="progress"><div class="fill" data-w="{{ s.avg|round(0) }}"></div></div><b>{{ '%.0f'|format(s.avg) }}%</b></div>{% endfor %}</div>
+<h2>By topic</h2>
+<div class="card">{% for t in by_topic %}<div class="row"><span>{{ t.category }} — {{ t.topic }} ({{ t.n }} attempts)</span><b>{{ '%.0f'|format(t.avg) }}%</b></div>{% endfor %}</div>
+<p class="muted">Recommendations are rule-based: the topic with the lowest average score from your past quizzes.</p>
+<script>document.querySelectorAll('.fill').forEach(f => f.style.width = f.dataset.w + '%');</script>
+{% else %}<div class="card empty">Complete your first quiz to unlock performance insights.</div>{% endif %}
+{% endblock %}

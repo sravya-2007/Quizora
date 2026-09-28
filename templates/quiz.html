@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}Quiz · Quizora{% endblock %}
+{% block content %}
+<form id="quiz-form" method="post" class="card quiz" data-seconds="{{ seconds }}">
+  <div class="qhead"><span>{{ subject }} · {{ difficulty }} — {{ topic }}</span><b id="timer">--:--</b></div>
+  <div class="progress"><div id="progress-bar"></div></div>
+  <p class="muted">Question <span id="q-current">1</span> of <span id="q-total">{{ questions|length }}</span></p>
+  {% for q in questions %}
+  <div class="qcard" hidden>
+    <h2>{{ q.question }}</h2>
+    {% for letter, text in [('A', q.option_a), ('B', q.option_b), ('C', q.option_c), ('D', q.option_d)] %}
+    <label class="opt"><input type="radio" name="q{{ q.id }}" value="{{ text }}"><span class="letter">{{ letter }}</span>{{ text }}</label>
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <div class="nav">
+    <button type="button" id="prev-btn" class="btn ghost">Previous</button>
+    <button type="button" id="next-btn" class="btn">Next</button>
+    <button type="submit" id="finish-btn" class="btn" hidden>Finish quiz</button>
+  </div>
+</form>
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}

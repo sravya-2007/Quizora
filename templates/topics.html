@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}{{ subject }} · Quizora{% endblock %}
+{% block content %}
+<h1>{{ subject }}</h1>
+<div class="grid3">{% for t in topics %}
+  <div class="card"><h3>{{ t.topic }}</h3>
+  <p class="muted">{{ t.total }} questions · {{ t.easy }} easy · {{ t.medium }} medium · {{ t.hard }} hard</p>
+  <a class="btn" href="{{ url_for('quiz', subject=subject, topic=t.topic, difficulty='Mixed') }}">Start mixed quiz</a>
+  <div class="chips">
+  {% for d, n in [('Easy', t.easy), ('Medium', t.medium), ('Hard', t.hard)] %}
+    {% if n %}<a class="btn ghost" href="{{ url_for('quiz', subject=subject, topic=t.topic, difficulty=d) }}">{{ d }}</a>
+    {% else %}<span class="btn ghost disabled">{{ d }}</span>{% endif %}
+  {% endfor %}</div></div>
+{% endfor %}</div>
+{% endblock %}

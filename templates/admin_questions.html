@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block title %}Question bank · Quizora{% endblock %}
+{% block content %}
+<h1>Question bank</h1>
+<form method="get" class="card filters">
+  <input name="search" placeholder="Search questions or explanations" value="{{ f.search }}">
+  <select name="subject"><option value="">All subjects</option>{% for s in subjects %}<option {{ 'selected' if s == f.subject }}>{{ s }}</option>{% endfor %}</select>
+  <select name="topic"><option value="">All topics</option>{% for t in topics %}<option {{ 'selected' if t == f.topic }}>{{ t }}</option>{% endfor %}</select>
+  <select name="difficulty"><option value="">All levels</option>{% for d in ['Easy','Medium','Hard'] %}<option {{ 'selected' if d == f.difficulty }}>{{ d }}</option>{% endfor %}</select>
+  <button class="btn">Filter</button>
+  <a class="btn ghost" href="{{ url_for('add_question') }}">+ Add question</a>
+</form>
+{% for q in rows %}
+<div class="card">
+  <p class="muted">#{{ q.id }} · {{ q.subject }} · {{ q.topic }} · {{ q.difficulty }}</p>
+  <h3>{{ q.question }}</h3>
+  <p>Correct: <b>{{ q.correct_answer }}</b></p>
+  {% if q.explanation %}<p class="muted">{{ q.explanation[:120] }}{{ '…' if q.explanation|length > 120 }}</p>{% endif %}
+  <a class="btn ghost" href="{{ url_for('edit_question', question_id=q.id) }}">Edit</a>
+  <form method="post" action="{{ url_for('delete_question', question_id=q.id) }}" class="inline" onsubmit="return confirm('Delete this question?');">
+    <button class="btn danger">Delete</button></form>
+</div>
+{% else %}<div class="card empty">No questions found. Add one to begin building Quizora.</div>{% endfor %}
+{% endblock %}

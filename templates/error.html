@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}{{ code }} · Quizora{% endblock %}
+{% block content %}
+<div class="card center"><h1>{{ code }}</h1><p>{{ msg }}</p><a class="btn" href="{{ url_for('dashboard') }}">Back to dashboard</a></div>
+{% endblock %}

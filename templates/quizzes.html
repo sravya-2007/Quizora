@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Explore · Quizora{% endblock %}
+{% block content %}
+<h1>Explore quizzes</h1>
+{% if subjects %}<div class="grid3">{% for s in subjects %}
+  <div class="card"><h3>{{ s.subject }}</h3><p class="muted">{{ s.topics }} topics · {{ s.total }} questions</p>
+  <a class="btn" href="{{ url_for('topics', subject=s.subject) }}">Explore topics →</a></div>
+{% endfor %}</div>{% else %}<div class="card empty">No quizzes are available yet.</div>{% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block title %}{{ title }} · Quizora{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post" class="card qform">
+  <h3>Classification</h3>
+  <label>Subject<input name="subject" list="subjlist" value="{{ q.subject or '' }}" required></label>
+  <datalist id="subjlist">{% for s in subjects %}<option value="{{ s }}">{% endfor %}</datalist>
+  <label>Topic<input name="topic" value="{{ q.topic or '' }}" required></label>
+  <label>Difficulty<select name="difficulty">{% for d in diffs %}<option {{ 'selected' if d == q.difficulty }}>{{ d }}</option>{% endfor %}</select></label>
+  <h3>Question</h3>
+  <textarea name="question" rows="3" required>{{ q.question or '' }}</textarea>
+  <h3>Answer options</h3>
+  <label>A<input name="option_a" value="{{ q.option_a or '' }}" required></label>
+  <label>B<input name="option_b" value="{{ q.option_b or '' }}" required></label>
+  <label>C<input name="option_c" value="{{ q.option_c or '' }}" required></label>
+  <label>D<input name="option_d" value="{{ q.option_d or '' }}" required></label>
+  <label>Correct answer<select name="correct" required>
+    <option value="">Select…</option>
+    {% for c in 'abcd' %}<option value="{{ c }}" {{ 'selected' if q.correct == c }}>Option {{ c|upper }}</option>{% endfor %}
+  </select></label>
+  <h3>Explanation</h3>
+  <textarea name="explanation" rows="3">{{ q.explanation or '' }}</textarea>
+  <button class="btn big">Save question</button>
+</form>
+{% endblock %}

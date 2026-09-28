@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}Result · Quizora{% endblock %}
+{% block content %}
+<div class="card center">
+  <h1>Quiz completed</h1>
+  <div class="ring" style="--p: {{ pct }}"><b>{{ score }} / {{ total }}</b><span>{{ pct }}%</span></div>
+  <a class="btn" href="{{ url_for('quiz', subject=subject, topic=topic, difficulty=difficulty) }}">Try again</a>
+  <a class="btn ghost" href="{{ url_for('quizzes') }}">Explore more quizzes</a>
+  <a class="btn ghost" href="{{ url_for('analytics') }}">View analytics</a>
+</div>
+<h2>Answer review</h2>
+{% for r in review %}
+<div class="card review {{ 'good' if r.ok else 'bad' }}">
+  <b>{{ 'Correct' if r.ok else 'Incorrect' }}</b>
+  <h3>{{ r.q.question }}</h3>
+  <p>Your answer: {{ r.answer or 'Not answered' }}</p>
+  {% if not r.ok %}<p>Correct answer: {{ r.q.correct_answer }}</p>{% endif %}
+  {% if r.q.explanation %}<p class="why"><b>Why?</b> {{ r.q.explanation }}</p>{% endif %}
+</div>
+{% endfor %}
+{% endblock %}

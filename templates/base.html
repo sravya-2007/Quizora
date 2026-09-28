@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Quizora{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</head>
+<body>
+{% if session.user_id %}
+<aside class="sidebar">
+  <a class="logo" href="{{ url_for('dashboard') }}">Quizora</a>
+  <nav>
+    <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+    <a href="{{ url_for('quizzes') }}">📚 Explore Quizzes</a>
+    <a href="{{ url_for('analytics') }}">📊 Analytics</a>
+    <a href="{{ url_for('leaderboard') }}">🏆 Leaderboard</a>
+    <a href="{{ url_for('history') }}">🕘 History</a>
+    <a href="{{ url_for('profile') }}">👤 Profile</a>
+    {% if session.is_admin %}<a href="{{ url_for('admin') }}">🛠 Question Admin</a>{% endif %}
+  </nav>
+  <a class="logout" href="{{ url_for('logout') }}">⏻ Logout</a>
+</aside>
+{% endif %}
+<div class="main {% if session.user_id %}with-side{% endif %}">
+  <header class="topbar">
+    <span class="tag">Sharpen your skills, one quiz at a time.</span>
+    <div class="themes">
+      <button data-theme-btn="aurora">Aurora</button>
+      <button data-theme-btn="midnight">Midnight</button>
+      <button data-theme-btn="focus">Focus</button>
+    </div>
+  </header>
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}
+  {% endwith %}
+  <main>{% block content %}{% endblock %}</main>
+</div>
+</body>
+</html>

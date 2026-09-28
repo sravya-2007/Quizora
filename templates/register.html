@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Register · Quizora{% endblock %}
+{% block content %}
+<form method="post" class="card auth">
+  <h1>Create your account</h1>
+  <label>Username<input name="username" required></label>
+  <label>Email<input type="email" name="email" required></label>
+  <label>Password<input type="password" name="password" minlength="6" required></label>
+  <label>Confirm password<input type="password" name="confirm" required></label>
+  <button class="btn">Register</button>
+  <p class="muted">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+</form>
+{% endblock %}

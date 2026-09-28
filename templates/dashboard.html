@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Dashboard · Quizora{% endblock %}
+{% block content %}
+<section class="hero"><p class="muted">Hello, {{ session.username }}</p>
+<h1>Sharpen your skills,<br>one quiz at a time.</h1>
+<a class="btn" href="{{ url_for('quizzes') }}">Explore quizzes</a></section>
+<div class="grid3">
+  <div class="card stat"><b>{{ stats.n }}</b>Total attempts</div>
+  <div class="card stat"><b>{{ '%.1f'|format(stats.avg or 0) }}%</b>Average score</div>
+  <div class="card stat"><b>{{ '%.1f'|format(stats.best or 0) }}%</b>Best score</div>
+</div>
+<h2>Available subjects</h2>
+{% if subjects %}<div class="grid3">{% for s in subjects %}
+  <a class="card" href="{{ url_for('topics', subject=s.subject) }}"><h3>{{ s.subject }}</h3><p class="muted">{{ s.topics }} topics · {{ s.total }} questions</p></a>
+{% endfor %}</div>{% else %}<div class="card empty">No quizzes are available yet.</div>{% endif %}
+<h2>Recent attempts</h2>
+{% if recent %}<div class="card">{% for r in recent %}
+  <div class="row"><span>{{ r.category }} · {{ r.topic }} · {{ r.difficulty }}</span><b>{{ r.score }}/{{ r.total }} ({{ r.percentage }}%)</b></div>
+{% endfor %}</div>{% else %}<div class="card empty">You haven't attempted any quizzes yet.</div>{% endif %}
+{% endblock %}

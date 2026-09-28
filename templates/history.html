@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}History · Quizora{% endblock %}
+{% block content %}
+<h1>Attempt history</h1>
+{% if rows %}<div class="card scroll"><table><tr><th>Subject</th><th>Topic</th><th>Difficulty</th><th>Score</th><th>%</th><th>Date</th></tr>
+{% for r in rows %}<tr><td>{{ r.category }}</td><td>{{ r.topic }}</td><td>{{ r.difficulty }}</td><td>{{ r.score }}/{{ r.total }}</td><td>{{ r.percentage }}%</td><td>{{ r.date }}</td></tr>{% endfor %}</table></div>
+{% else %}<div class="card empty">You haven't attempted any quizzes yet.</div>{% endif %}
+{% endblock %}

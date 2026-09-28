@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Profile · Quizora{% endblock %}
+{% block content %}
+<h1>Profile</h1>
+<div class="card">
+  <div class="row"><span>Username</span><b>{{ session.username }}</b></div>
+  <div class="row"><span>Email</span><b>{{ session.email }}</b></div>
+  <div class="row"><span>Account type</span><b>{{ 'Administrator' if session.is_admin else 'Student' }}</b></div>
+  <div class="row"><span>Total attempts</span><b>{{ stats.n }}</b></div>
+  <div class="row"><span>Average score</span><b>{{ '%.1f'|format(stats.avg or 0) }}%</b></div>
+  <div class="row"><span>Best score</span><b>{{ '%.1f'|format(stats.best or 0) }}%</b></div>
+</div>
+{% endblock %}

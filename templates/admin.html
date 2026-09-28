@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Admin · Quizora{% endblock %}
+{% block content %}
+<h1>Quizora Admin</h1><p class="muted">Question management</p>
+<a class="btn" href="{{ url_for('add_question') }}">+ Add question</a>
+<a class="btn ghost" href="{{ url_for('admin_questions') }}">Manage question bank</a>
+<div class="grid3" style="margin-top:20px">
+  <div class="card stat"><b>{{ stats.total }}</b>Total questions</div>
+  <div class="card stat"><b>{{ stats.subjects }}</b>Subjects</div>
+  <div class="card stat"><b>{{ stats.topics }}</b>Topics</div>
+  <div class="card stat"><b>{{ stats.easy }}</b>Easy</div>
+  <div class="card stat"><b>{{ stats.medium }}</b>Medium</div>
+  <div class="card stat"><b>{{ stats.hard }}</b>Hard</div>
+</div>
+<h2>Subjects</h2>
+{% if subjects %}<div class="grid3">{% for s in subjects %}<div class="card"><h3>{{ s.subject }}</h3><p class="muted">{{ s.topics }} topics · {{ s.total }} questions</p></div>{% endfor %}</div>
+{% else %}<div class="card empty">Your question bank is empty. Add your first question to begin building Quizora.</div>{% endif %}
+<h2>Recently added</h2>
+{% for q in recent %}<div class="card row"><span>#{{ q.id }} {{ q.subject }} · {{ q.topic }} — {{ q.question }}</span></div>{% endfor %}
+{% endblock %}
